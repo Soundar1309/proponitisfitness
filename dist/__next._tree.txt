@@ -7,4 +7,4 @@
 :HL["https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css","style"]
 :HL["https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css","style"]
 :HL["//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css","style"]
-0:{"buildId":"IeKicUycPS1SHdXQUecrY","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
+0:{"buildId":"LS40oB7_hiE8DwMGEEpnL","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
