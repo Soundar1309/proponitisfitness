@@ -19,11 +19,11 @@ const Trainer = () => {
                     <div className="trainer__blob"></div>
                     <Image
                         src="/assets/trainer-1.jpg"
-                        alt="Mr. Selva"
+                        alt="Mr. Selva Kumar — Personal Trainer in Coimbatore, RS Puram"
                         width={450}
                         height={550}
                         className="trainer__img"
-                        priority
+                        loading="lazy"
                     />
                     <div className="trainer__exp-badge">
                         <h4>14+</h4>

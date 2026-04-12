@@ -1,40 +1,50 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
+import Script from "next/script";
 import { motion } from "framer-motion";
 
-const reviews = [
+const ELFSIGHT_ID = process.env.NEXT_PUBLIC_ELFSIGHT_ID;
+const TRUSTINDEX_ID = process.env.NEXT_PUBLIC_TRUSTINDEX_ID;
+
+const fallbackReviews = [
     {
         name: "Zahida Fathima",
-        text: "I joined due to hand pain, and with regular exercises and continuous support, the pain has completely resolved within three months. The facility is clean and well-maintained, and the trainers are professional, approachable, and always ready to address any queries.",
+        text: "I joined due to hand pain, and with regular exercises and continuous support, the pain has completely resolved within three months. The facility is clean and well-maintained, and the trainer is professional, approachable, and always ready to address any queries.",
         rating: 5,
-        image: "/assets/client-1.jpg",
     },
     {
-        name: "siva",
-        text: "Genuinely a great gym experience with great trainers and a well equipped gym, the trainers are really friendly and have great knowledge on the subject of fitness and give really good advice to improve more.",
+        name: "Siva",
+        text: "Genuinely a great gym experience with great trainers and a well equipped gym. The trainers are really friendly and have great knowledge on the subject of fitness and give really good advice to improve more.",
         rating: 5,
-        image: "/assets/client-1.jpg",
     },
     {
         name: "Vijayakumar Chandrasekaran",
-        text: "The trainer Selvakumar sir is very professional. At the same time, he takes personal care. I am very happy with his teaching methods. I have been training in his fitness centre for nearly a month and my experience is very good. I would certainly recommend him for all fitness aspirants.",
+        text: "Selvakumar sir is very professional. At the same time, he takes personal care. I have been training in his fitness centre for nearly a month and my experience is very good. I would certainly recommend him for all fitness aspirants.",
         rating: 5,
-        image: "/assets/client-1.jpg",
     },
     {
         name: "Venkata Nathan",
-        text: "I am a banking professional due to continuous sitting job I have gained my weight to 105 kg. After joining the gym of 20 days my body get fully flexible. My heart felt thanks to Trainer Mr selva. I had a great experience with the gym. Mr selva is very good trainer .",
+        text: "I was a banking professional who gained weight to 105 kg. After joining the gym, within 20 days my body became fully flexible. My heartfelt thanks to Trainer Mr. Selva — I had a great experience.",
         rating: 5,
-        image: "/assets/client-1.jpg",
     },
 ];
 
+const StarRating = ({ count }: { count: number }) => (
+    <div className="client__ratings" aria-label={`${count} out of 5 stars`}>
+        {Array.from({ length: count }).map((_, i) => (
+            <span key={i}>
+                <i className="ri-star-fill"></i>
+            </span>
+        ))}
+    </div>
+);
+
 const Reviews = () => {
+    const hasElfsight = Boolean(ELFSIGHT_ID);
+    const hasTrustindex = Boolean(TRUSTINDEX_ID) && !hasElfsight;
+    const useFallback = !hasElfsight && !hasTrustindex;
+
     return (
         <section className="section__container client__container" id="client">
             <motion.div
@@ -43,61 +53,97 @@ const Reviews = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
             >
-                <h2 className="section__header">What People Say About Us?</h2>
+                <h2 className="section__header">What Our Members Say</h2>
                 <p className="section__description">
-                    These testimonials serve as a testament to our commitment to helping
-                    individuals achieve their fitness goals, and fostering a supportive
-                    environment for everyone who walks through our doors.
+                    Real results from real clients at Proponitis Fitness — the best gym
+                    in Coimbatore. Personalised coaching that delivers sustainable
+                    transformation.
                 </p>
             </motion.div>
-            <div className="swiper">
-                <Swiper
-                    loop={true}
-                    spaceBetween={20}
-                    className="swiper-wrapper"
-                    breakpoints={{
-                        640: {
-                            slidesPerView: 1,
-                        },
-                        768: {
-                            slidesPerView: 2,
-                        },
-                        1024: {
-                            slidesPerView: 3,
-                        },
-                    }}
+
+            {/* ── Elfsight Google Reviews Widget ── */}
+            {hasElfsight && (
+                <motion.div
+                    className="reviews__widget-wrapper"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                    {reviews.map((review, index) => (
-                        <SwiperSlide key={index} className="swiper-slide">
-                            <motion.div
-                                className="client__card"
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: index * 0.1 }}
-                                whileHover={{ y: -5 }}
-                            >
-                                <Image
-                                    src={review.image}
-                                    alt="client"
-                                    width={80}
-                                    height={80}
-                                    style={{ objectFit: "cover" }}
-                                />
-                                <div className="client__ratings">
-                                    {Array.from({ length: review.rating }).map((_, i) => (
-                                        <span key={i}>
-                                            <i className="ri-star-fill"></i>
-                                        </span>
-                                    ))}
-                                </div>
-                                <p>{review.text}</p>
-                                <h4>{review.name}</h4>
-                            </motion.div>
-                        </SwiperSlide>
+                    <Script
+                        src="https://static.elfsight.com/platform/platform.js"
+                        strategy="lazyOnload"
+                    />
+                    <div
+                        className={`elfsight-app-${ELFSIGHT_ID}`}
+                        data-elfsight-app-lazy
+                    />
+                </motion.div>
+            )}
+
+            {/* ── Trustindex Google Reviews Widget ── */}
+            {hasTrustindex && (
+                <motion.div
+                    className="reviews__widget-wrapper"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                >
+                    <Script
+                        src={`https://cdn.trustindex.io/loader.js?${TRUSTINDEX_ID}`}
+                        strategy="lazyOnload"
+                    />
+                    <div className="trustindex-widget" />
+                </motion.div>
+            )}
+
+            {/* ── Fallback — Manual Reviews Grid ── */}
+            {useFallback && (
+                <div className="reviews__fallback-grid">
+                    {fallbackReviews.map((review, index) => (
+                        <motion.div
+                            className="client__card reviews__card"
+                            key={index}
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                            whileHover={{ y: -5 }}
+                        >
+                            <div className="reviews__avatar">
+                                <i className="ri-user-3-line"></i>
+                            </div>
+                            <StarRating count={review.rating} />
+                            <p>&ldquo;{review.text}&rdquo;</p>
+                            <h4>{review.name}</h4>
+                            <span className="reviews__google-badge">
+                                <i className="ri-google-fill"></i> Google Review
+                            </span>
+                        </motion.div>
                     ))}
-                </Swiper>
-            </div>
+                </div>
+            )}
+
+            {/* ── Get More Reviews CTA ── */}
+            <motion.div
+                className="reviews__cta"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+            >
+                <p>Happy with your training? Share your experience on Google.</p>
+                <a
+                    href="https://g.page/r/CSzdZCkZpkvkEBM/review"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="reviews__google-cta"
+                    id="leave-google-review-btn"
+                >
+                    <i className="ri-google-fill"></i> Leave a Google Review
+                </a>
+            </motion.div>
         </section>
     );
 };

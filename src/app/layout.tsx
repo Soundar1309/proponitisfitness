@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const font = Poppins({
@@ -9,12 +10,24 @@ const font = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Proponitis Fitness | Best Gym in RS Puram, Coimbatore",
-  description: "Join Proponitis Fitness in RS Puram, Coimbatore. Expert trainers, weight loss coaching, and strength conditioning to help you shape your destiny.",
-  keywords: ["gym", "fitness", "coimbatore", "rs puram", "weight loss", "proponitis", "personal training"],
+  metadataBase: new URL("https://proponitisfitness.com"),
+  title: "Best Gym in Coimbatore — Proponitis Fitness, RS Puram",
+  description:
+    "Proponitis Fitness — Best personal training gym in Coimbatore, RS Puram. Weight loss, strength, sports training. Call +91 9952431546",
+  keywords: [
+    "best gym in coimbatore",
+    "best fitness centre in coimbatore",
+    "personal trainer coimbatore",
+    "gym in rs puram coimbatore",
+    "weight loss gym coimbatore",
+    "sports specific training coimbatore",
+    "women gym coimbatore morning",
+    "proponitis fitness",
+  ],
   openGraph: {
-    title: "Proponitis Fitness - Shape Yourself",
-    description: "Premium fitness studio in Coimbatore. Join us today!",
+    title: "Best Gym in Coimbatore — Proponitis Fitness",
+    description:
+      "Best personal training gym in Coimbatore, RS Puram. Weight loss, strength & sports training by Mr. Selva Kumar — 14 years, M.P.Ed, 500+ clients.",
     url: "https://proponitisfitness.com",
     siteName: "Proponitis Fitness",
     images: [
@@ -22,18 +35,62 @@ export const metadata: Metadata = {
         url: "/assets/header.png",
         width: 800,
         height: 600,
-        alt: "Proponitis Fitness Hero Image",
+        alt: "Best Fitness Centre in Coimbatore — Proponitis Fitness RS Puram",
       },
     ],
-    locale: "en_US",
+    locale: "en_IN",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Proponitis Fitness",
-    description: "Shape your destiny with expert fitness coaching in Coimbatore.",
+    title: "Best Gym in Coimbatore — Proponitis Fitness",
+    description:
+      "Best personal training gym in Coimbatore, RS Puram. Weight loss, strength & sports training.",
     images: ["/assets/header.png"],
   },
+  alternates: {
+    canonical: "https://proponitisfitness.com",
+  },
+};
+
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "HealthClub",
+  name: "Proponitis Fitness",
+  description:
+    "Best gym and personal training centre in Coimbatore, RS Puram. Expert coaching by Mr. Selva Kumar (M.P.Ed, 14 years, 500+ clients). Weight loss, sports training, functional fitness & stretching.",
+  image: "https://proponitisfitness.com/assets/logo.png",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Perumal Complex, 74, Ramachandra Rd, R.S. Puram",
+    addressLocality: "Coimbatore",
+    addressRegion: "Tamil Nadu",
+    postalCode: "641002",
+    addressCountry: "IN",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: "11.0018",
+    longitude: "76.9629",
+  },
+  hasMap: "https://maps.google.com/?q=Proponitis+Fitness+RS+Puram+Coimbatore",
+  url: "https://proponitisfitness.com",
+  telephone: "+919952431546",
+  email: "support@proponitisfitness.com",
+  priceRange: "$$",
+  currenciesAccepted: "INR",
+  paymentAccepted: "Cash, UPI",
+  openingHours: ["Mo-Sa 05:30-13:30", "Mo-Sa 16:00-22:00"],
+  founder: {
+    "@type": "Person",
+    name: "Selva Kumar",
+    jobTitle: "Certified Personal Trainer & Founder",
+    description: "M.P.Ed from Pondicherry University, 14 years experience, 500+ clients trained",
+  },
+  sameAs: [
+    "https://www.facebook.com/Tamilfitnesscoachselva/",
+    "https://www.instagram.com/proponitisfitnessstudio/",
+  ],
 };
 
 export default function RootLayout({
@@ -41,55 +98,70 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const gaId = process.env.NEXT_PUBLIC_GA_ID;
+  const gadsId = process.env.NEXT_PUBLIC_GADS_ID;
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Preconnect to external CDNs for faster first paint */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+        <link rel="preconnect" href="https://maxcdn.bootstrapcdn.com" />
+
+        {/* Critical CSS — icons needed for initial render */}
         <link
           href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
           rel="stylesheet"
         />
         <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
-        />
-        <link
           href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
           rel="stylesheet"
         />
+
+        {/* JSON-LD Schema Markup */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "GymOrFitnessCenter",
-              name: "Proponitis Fitness",
-              image: "https://proponitisfitness.com/assets/logo.png",
-              address: {
-                "@type": "PostalAddress",
-                streetAddress: "Perumal complex, 74, Ramachandra Rd, R.S. Puram",
-                addressLocality: "Coimbatore",
-                postalCode: "641002",
-                addressCountry: "IN",
-              },
-              geo: {
-                "@type": "GeoCoordinates",
-                latitude: "11.0018",
-                longitude: "76.9629",
-              },
-              url: "https://proponitisfitness.com",
-              telephone: "+919952431546",
-              priceRange: "$$",
-              openingHours: "Mo-Su 05:00-22:00",
-              sameAs: [
-                "https://www.facebook.com/Tamilfitnesscoachselva/",
-                "https://www.instagram.com/proponitisfitnessstudio/"
-              ]
-            }),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
         />
       </head>
       <body className={`${font.className}`}>
         {children}
+
+        {gaId && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${gaId}');
+              `}
+            </Script>
+          </>
+        )}
+
+        {gadsId && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gadsId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="gads-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${gadsId}');
+              `}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   );

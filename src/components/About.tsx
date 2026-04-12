@@ -18,16 +18,19 @@ const About = () => {
                 <Image
                     className="about__bg"
                     src="/assets/dot-bg.png"
-                    alt="bg"
+                    alt=""
                     width={250}
                     height={250}
+                    aria-hidden="true"
+                    loading="lazy"
                 />
                 <Image
                     src="/assets/about.png"
-                    alt="about"
+                    alt="Personal training sessions at Proponitis Fitness, RS Puram, Coimbatore"
                     width={500}
                     height={600}
                     style={{ width: "100%", height: "auto" }}
+                    loading="lazy"
                 />
             </motion.div>
             <motion.div
