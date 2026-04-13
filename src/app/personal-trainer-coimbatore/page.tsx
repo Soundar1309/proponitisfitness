@@ -25,6 +25,21 @@ export const metadata: Metadata = {
   },
 };
 
+const trainerSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Personal Training",
+    "provider": {
+        "@type": "Person",
+        "name": "Selva Kumar",
+        "jobTitle": "Personal Trainer & Founder",
+        "hasCredential": "M.P.Ed (Pondicherry University)",
+        "description": "14 years experience coaching 500+ clients in weight loss and sports training."
+    },
+    "areaServed": "Coimbatore",
+    "description": "Premium 1-on-1 personal training in Coimbatore at Proponitis Fitness. Specializing in weight loss, corrective exercise, and functional fitness."
+};
+
 export default function PersonalTrainerCoimbatore() {
   return (
     <SEOPageLayout
@@ -41,7 +56,7 @@ export default function PersonalTrainerCoimbatore() {
           text: "I joined due to hand pain, and with regular exercises and continuous support, the pain has completely resolved within three months. The facility is clean and well-maintained, and the trainer is professional and always ready to address any queries.",
         },
         {
-          name: "siva",
+          name: "Siva",
           text: "Genuinely a great gym experience with great trainers and a well equipped gym. The trainers are really friendly and have great knowledge on the subject of fitness and give really good advice to improve more.",
         },
       ]}
@@ -50,6 +65,10 @@ export default function PersonalTrainerCoimbatore() {
         { label: "Best Fitness Centre in Coimbatore", href: "/best-fitness-centre-coimbatore" },
       ]}
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(trainerSchema) }}
+      />
       <PersonalTrainerContent />
     </SEOPageLayout>
   );

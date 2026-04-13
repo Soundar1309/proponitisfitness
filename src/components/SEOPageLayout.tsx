@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import Script from "next/script";
 import { motion } from "framer-motion";
 
 const TRUSTINDEX_ID = process.env.NEXT_PUBLIC_TRUSTINDEX_ID;
@@ -97,6 +96,7 @@ const SEOPageLayout = ({
                 height={400}
                 className="seo__hero-img"
                 priority
+                quality={85}
               />
             </motion.div>
           </div>
@@ -125,11 +125,14 @@ const SEOPageLayout = ({
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <Script
-                  src={`https://cdn.trustindex.io/loader.js?${TRUSTINDEX_ID}`}
-                  strategy="lazyOnload"
+                <iframe
+                  src={`https://cdn.trustindex.io/amp-widget.html#${TRUSTINDEX_ID}`}
+                  width="100%"
+                  height="338"
+                  style={{ border: "none" }}
+                  title="Google Reviews"
+                  sandbox="allow-scripts allow-same-origin"
                 />
-                <div className="trustindex-widget" />
               </motion.div>
             ) : (
               <div className="seo__testimonials-grid">

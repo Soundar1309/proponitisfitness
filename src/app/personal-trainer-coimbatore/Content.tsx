@@ -7,7 +7,17 @@ import { motion } from "framer-motion";
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=919952431546&text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20personal%20training%20at%20Proponitis%20Fitness%2C%20Coimbatore.";
 
+const GADS_CONVERSION_ID = process.env.NEXT_PUBLIC_GADS_CONVERSION;
+
 const PersonalTrainerContent = () => {
+  const handleWhatsAppClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // Report conversion to Google Ads
+    if (typeof window !== "undefined" && (window as any).gtag && GADS_CONVERSION_ID) {
+      (window as any).gtag("event", "conversion", {
+        send_to: GADS_CONVERSION_ID,
+      });
+    }
+  };
   return (
     <>
       {/* Training Types */}
@@ -173,6 +183,7 @@ const PersonalTrainerContent = () => {
                 className="btn seo__wa-btn"
                 id="personaltrainer-women-whatsapp-btn"
                 style={{ marginTop: "1rem" }}
+                onClick={handleWhatsAppClick}
               >
                 <i className="ri-whatsapp-line"></i> Enquire About Women&apos;s Training
               </a>
@@ -219,6 +230,7 @@ const PersonalTrainerContent = () => {
                 rel="noopener noreferrer"
                 className="btn seo__wa-btn"
                 id="personaltrainer-benefits-whatsapp-btn"
+                onClick={handleWhatsAppClick}
               >
                 <i className="ri-whatsapp-line"></i> Talk to Our Personal Trainer — WhatsApp Now
               </a>

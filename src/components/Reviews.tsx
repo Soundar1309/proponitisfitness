@@ -1,10 +1,8 @@
 "use client";
 
 import React from "react";
-import Script from "next/script";
 import { motion } from "framer-motion";
 
-const ELFSIGHT_ID = process.env.NEXT_PUBLIC_ELFSIGHT_ID;
 const TRUSTINDEX_ID = process.env.NEXT_PUBLIC_TRUSTINDEX_ID;
 
 const fallbackReviews = [
@@ -41,9 +39,8 @@ const StarRating = ({ count }: { count: number }) => (
 );
 
 const Reviews = () => {
-    const hasElfsight = Boolean(ELFSIGHT_ID);
-    const hasTrustindex = Boolean(TRUSTINDEX_ID) && !hasElfsight;
-    const useFallback = !hasElfsight && !hasTrustindex;
+    const hasTrustindex = Boolean(TRUSTINDEX_ID);
+    const useFallback = !hasTrustindex;
 
     return (
         <section className="section__container client__container" id="client">
@@ -61,25 +58,7 @@ const Reviews = () => {
                 </p>
             </motion.div>
 
-            {/* ── Elfsight Google Reviews Widget ── */}
-            {hasElfsight && (
-                <motion.div
-                    className="reviews__widget-wrapper"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                >
-                    <Script
-                        src="https://static.elfsight.com/platform/platform.js"
-                        strategy="lazyOnload"
-                    />
-                    <div
-                        className={`elfsight-app-${ELFSIGHT_ID}`}
-                        data-elfsight-app-lazy
-                    />
-                </motion.div>
-            )}
+
 
             {/* ── Trustindex Google Reviews Widget ── */}
             {hasTrustindex && (
@@ -90,11 +69,14 @@ const Reviews = () => {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                    <Script
-                        src={`https://cdn.trustindex.io/loader.js?${TRUSTINDEX_ID}`}
-                        strategy="lazyOnload"
+                    <iframe
+                        src={`https://cdn.trustindex.io/amp-widget.html#${TRUSTINDEX_ID}`}
+                        width="100%"
+                        height="338"
+                        style={{ border: "none" }}
+                        title="Google Reviews"
+                        sandbox="allow-scripts allow-same-origin"
                     />
-                    <div className="trustindex-widget" />
                 </motion.div>
             )}
 

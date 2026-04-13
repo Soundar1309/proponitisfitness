@@ -53,7 +53,7 @@ const Trainer = () => {
                     <div className="trainer__stats">
                         <div className="stat__item">
                             <h4><i className="ri-award-fill"></i> M.P.Ed</h4>
-                            <p>Master's Degree</p>
+                            <p>Master&apos;s Degree</p>
                         </div>
                         <div className="stat__item">
                             <h4><i className="ri-team-fill"></i> 500+</h4>
