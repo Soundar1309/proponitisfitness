@@ -3,8 +3,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const TRUSTINDEX_ID = process.env.NEXT_PUBLIC_TRUSTINDEX_ID;
-
 const fallbackReviews = [
     {
         name: "Zahida Fathima",
@@ -39,9 +37,6 @@ const StarRating = ({ count }: { count: number }) => (
 );
 
 const Reviews = () => {
-    const hasTrustindex = Boolean(TRUSTINDEX_ID);
-    const useFallback = !hasTrustindex;
-
     return (
         <section className="section__container client__container" id="client">
             <motion.div
@@ -58,54 +53,30 @@ const Reviews = () => {
                 </p>
             </motion.div>
 
-
-
-            {/* ── Trustindex Google Reviews Widget ── */}
-            {hasTrustindex && (
-                <motion.div
-                    className="reviews__widget-wrapper"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                >
-                    <iframe
-                        src={`https://cdn.trustindex.io/amp-widget.html#${TRUSTINDEX_ID}`}
-                        width="100%"
-                        height="338"
-                        style={{ border: "none" }}
-                        title="Google Reviews"
-                        sandbox="allow-scripts allow-same-origin"
-                    />
-                </motion.div>
-            )}
-
-            {/* ── Fallback — Manual Reviews Grid ── */}
-            {useFallback && (
-                <div className="reviews__fallback-grid">
-                    {fallbackReviews.map((review, index) => (
-                        <motion.div
-                            className="client__card reviews__card"
-                            key={index}
-                            initial={{ opacity: 0, y: 50 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
-                            whileHover={{ y: -5 }}
-                        >
-                            <div className="reviews__avatar">
-                                <i className="ri-user-3-line"></i>
-                            </div>
-                            <StarRating count={review.rating} />
-                            <p>&ldquo;{review.text}&rdquo;</p>
-                            <h4>{review.name}</h4>
-                            <span className="reviews__google-badge">
-                                <i className="ri-google-fill"></i> Google Review
-                            </span>
-                        </motion.div>
-                    ))}
-                </div>
-            )}
+            {/* ── Manual Reviews Grid ── */}
+            <div className="reviews__fallback-grid">
+                {fallbackReviews.map((review, index) => (
+                    <motion.div
+                        className="client__card reviews__card"
+                        key={index}
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                        whileHover={{ y: -5 }}
+                    >
+                        <div className="reviews__avatar">
+                            <i className="ri-user-3-line"></i>
+                        </div>
+                        <StarRating count={review.rating} />
+                        <p>&ldquo;{review.text}&rdquo;</p>
+                        <h4>{review.name}</h4>
+                        <span className="reviews__google-badge">
+                            <i className="ri-google-fill"></i> Google Review
+                        </span>
+                    </motion.div>
+                ))}
+            </div>
 
             {/* ── Get More Reviews CTA ── */}
             <motion.div
