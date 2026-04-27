@@ -7,8 +7,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 
-const TRUSTINDEX_ID = process.env.NEXT_PUBLIC_TRUSTINDEX_ID;
-
 const WHATSAPP_BASE =
   "https://api.whatsapp.com/send?phone=919952431546&text=";
 
@@ -117,41 +115,22 @@ const SEOPageLayout = ({
               <h2 className="section__header">What Our Members Say</h2>
             </motion.div>
 
-            {TRUSTINDEX_ID ? (
-              <motion.div
-                className="reviews__widget-wrapper"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-              >
-                <iframe
-                  src={`https://cdn.trustindex.io/amp-widget.html#${TRUSTINDEX_ID}`}
-                  width="100%"
-                  height="338"
-                  style={{ border: "none" }}
-                  title="Google Reviews"
-                  sandbox="allow-scripts allow-same-origin"
-                />
-              </motion.div>
-            ) : (
-              <div className="seo__testimonials-grid">
-                {testimonials.map((t, i) => (
-                  <motion.div
-                    key={i}
-                    className="seo__testimonial-card"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: i * 0.15 }}
-                  >
-                    <StarRating />
-                    <p>&ldquo;{t.text}&rdquo;</p>
-                    <h4>— {t.name}</h4>
-                  </motion.div>
-                ))}
-              </div>
-            )}
+            <div className="seo__testimonials-grid">
+              {testimonials.map((t, i) => (
+                <motion.div
+                  key={i}
+                  className="seo__testimonial-card"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.15 }}
+                >
+                  <StarRating />
+                  <p>&ldquo;{t.text}&rdquo;</p>
+                  <h4>— {t.name}</h4>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </section>
 
