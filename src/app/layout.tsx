@@ -77,10 +77,15 @@ const schemaData = {
   url: "https://proponitisfitness.com",
   telephone: "+919952431546",
   email: "support@proponitisfitness.com",
-  priceRange: "$$",
+  priceRange: "₹₹",
   currenciesAccepted: "INR",
   paymentAccepted: "Cash, UPI",
   openingHours: ["Mo-Sa 05:30-13:30", "Mo-Sa 16:00-22:00"],
+  aggregateRating: {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "reviewCount": "4",
+  },
   founder: {
     "@type": "Person",
     name: "Selva Kumar",

@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=919952431546&text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20personal%20training%20at%20Proponitis%20Fitness%2C%20Coimbatore.";
 
-const GADS_CONVERSION_ID = process.env.NEXT_PUBLIC_GADS_CONVERSION;
+const GADS_CONVERSION_ID = process.env.NEXT_PUBLIC_GADS_CONVERSION || "AW-18048589506/8gIYCIbMyIEdEMK9np5D";
 
 const PersonalTrainerContent = () => {
   const handleWhatsAppClick = (e: React.MouseEvent<HTMLAnchorElement>) => {

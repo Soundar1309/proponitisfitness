@@ -1,43 +1,47 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
-const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
+const GSHEET_SCRIPT_URL =
+  process.env.NEXT_PUBLIC_GSHEET_SCRIPT_URL ||
+  "https://script.google.com/macros/s/AKfycbxbiixvuzDYtEhPlYTK48XXrUvKOVxYf4xM5DAvL2nojfdQViB8lVKodLaeODieM8tBTQ/exec";
 
 const Contact = () => {
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsSubmitting(true);
 
-    const form = event.target as HTMLFormElement;
+    const form = event.currentTarget;
     const formData = new FormData(form);
 
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", form.action, true);
-    xhr.setRequestHeader("Accept", "application/json");
+    const scriptUrl = GSHEET_SCRIPT_URL;
 
-    xhr.onload = function () {
-      try {
-        const response = JSON.parse(xhr.responseText);
-        if (response.ok || response.success) {
-          form.reset();
-          router.push("/thank-you");
-        } else {
-          alert("Failed to send the message. Please try again or WhatsApp us directly.");
-        }
-      } catch {
-        alert("Something went wrong. Please WhatsApp us directly at +91 9952431546.");
-      }
-    };
+    if (!scriptUrl || scriptUrl.includes("YOUR_SCRIPT_ID")) {
+      alert(
+        "Google Apps Script URL is not configured yet. Please add your Web App URL to NEXT_PUBLIC_GSHEET_SCRIPT_URL in .env.local."
+      );
+      setIsSubmitting(false);
+      return;
+    }
 
-    xhr.onerror = function () {
-      alert("Network error. Please WhatsApp us directly at +91 9952431546.");
-    };
+    try {
+      await fetch(scriptUrl, {
+        method: "POST",
+        body: formData,
+        mode: "no-cors",
+      });
 
-    xhr.send(formData);
+      form.reset();
+      router.push("/thank-you");
+    } catch {
+      alert("Something went wrong. Please WhatsApp us directly at +91 9952431546.");
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -109,19 +113,8 @@ const Contact = () => {
         </div>
 
         <div className="contactForm">
-          <form
-            id="contactForm"
-            action="https://api.web3forms.com/submit"
-            method="POST"
-            onSubmit={handleFormSubmit}
-          >
+          <form id="contactForm" onSubmit={handleFormSubmit}>
             <h2>Send Message</h2>
-            <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
-            <input
-              type="hidden"
-              name="subject"
-              value="New Enquiry — Proponitis Fitness Website"
-            />
             <div className="inputBox">
               <span>Full Name</span>
               <input
@@ -143,25 +136,36 @@ const Contact = () => {
               />
             </div>
             <div className="inputBox">
-              <span>Email</span>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Enter Your Email"
-              />
+              <span>I&apos;m interested in</span>
+              <select
+                id="interestedIn"
+                name="interestedIn"
+                required
+                defaultValue="Personal Training"
+              >
+                <option value="Personal Training">Personal Training</option>
+                <option value="Sports Specific Training">Sports Specific Training</option>
+                <option value="Full Body Stretching">Full Body Stretching</option>
+                <option value="Strength & Conditioning">Strength &amp; Conditioning</option>
+                <option value="Weightloss coaching">Weightloss coaching</option>
+                <option value="General Membership">General Membership</option>
+              </select>
             </div>
             <div className="inputBox">
-              <span>Your Goal / Message</span>
+              <span>Your Goal / Message (optional)</span>
               <textarea
                 id="comment"
                 name="comment"
                 placeholder="e.g. I want to lose weight, I am interested in personal training..."
-                required
               ></textarea>
             </div>
             <div className="inputBox">
-              <input type="submit" value="Send Enquiry" id="contact-submit-btn" />
+              <input
+                type="submit"
+                value={isSubmitting ? "Sending..." : "Send Enquiry"}
+                id="contact-submit-btn"
+                disabled={isSubmitting}
+              />
             </div>
           </form>
         </div>

@@ -53,6 +53,7 @@ const Footer = () => {
               <li><Link href="/#class">Services</Link></li>
               <li><Link href="/#contact-section">Contact</Link></li>
               <li><Link href="/blog">Blog</Link></li>
+              <li><a href="/sitemap.xml" target="_blank" rel="noopener noreferrer">Sitemap</a></li>
             </ul>
           </div>
 
@@ -112,6 +113,26 @@ const Footer = () => {
                 +91 9952431546
               </a>
             </p>
+            <div
+              style={{
+                marginTop: "0.8rem",
+                borderRadius: "8px",
+                overflow: "hidden",
+                border: "1px solid rgba(255, 255, 255, 0.15)",
+                maxWidth: "240px",
+              }}
+            >
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.43!2d76.9526!3d11.0061!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba859221f1672cf%3A0xe44ba6192964dd2c!2sProponitis%20Fitness%20Studio!5e0!3m2!1sen!2sin!4v1790114006922!5m2!1sen!2sin"
+                width="100%"
+                height="140"
+                style={{ border: 0, display: "block" }}
+                allowFullScreen={false}
+                loading="lazy"
+                referrerPolicy="strict-origin-when-cross-origin"
+                title="Proponitis Fitness Studio Location Map"
+              ></iframe>
+            </div>
           </div>
         </div>
         <div className="footer__bar">

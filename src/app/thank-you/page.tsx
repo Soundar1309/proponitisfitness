@@ -14,7 +14,7 @@ declare global {
 
 const ThankYouPage = () => {
   useEffect(() => {
-    const conversionId = process.env.NEXT_PUBLIC_GADS_CONVERSION;
+    const conversionId = process.env.NEXT_PUBLIC_GADS_CONVERSION || "AW-18048589506/8gIYCIbMyIEdEMK9np5D";
 
     if (typeof window !== "undefined" && typeof window.gtag === "function") {
       if (conversionId) {
